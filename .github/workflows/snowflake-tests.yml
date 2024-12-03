@@ -1,0 +1,33 @@
+name: Run Gradle Tests
+
+# Trigger the workflow on demand (manual trigger)
+on:
+  workflow_dispatch:  # This will allow you to manually trigger the workflow
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up JDK (example: OpenJDK 11, can be changed based on your project requirements)
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Run Gradle tests
+      - name: Run Gradle Snowflake tests
+        run: ./gradlew :hibernate-core:matrix_snowflake
+
+      # Optionally: Upload test results to GitHub Actions
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: build/test-results/test
