@@ -97,6 +97,8 @@ dependencyResolutionManagement {
             def micrometerVersion = version "micrometer", "1.14.1"
 
             def antVersion = version "ant", "1.10.15"
+            def snowflakeJdbcVersion = version "snowflakeJdbc", "3.19.0"
+            def slf4jVersion = version "slf4j", "1.7.13"
 
             library( "antlr", "org.antlr", "antlr4" ).versionRef( antlrVersion )
             library( "antlrRuntime", "org.antlr", "antlr4-runtime" ).versionRef( antlrVersion)
@@ -135,6 +137,8 @@ dependencyResolutionManagement {
             library( "micrometer", "io.micrometer", "micrometer-core" ).versionRef( micrometerVersion )
 
             library( "ant", "org.apache.ant", "ant" ).versionRef( antVersion )
+            library("slf4j", "org.slf4j" , "slf4j-api").versionRef(slf4jVersion)
+            library("snowflakeJdbc", "net.snowflake" , "snowflake-jdbc").versionRef(snowflakeJdbcVersion)
         }
         jakartaLibs {
             // `jakartaJpaVersion` comes from the local-build-plugins to allow for command-line overriding of the JPA version to use

@@ -164,8 +164,19 @@ public final class Environment implements AvailableSettings {
 
 		try {
 			Properties systemProperties = System.getProperties();
+			String snowflakeAccount = System.getenv("SNOWFLAKE_TEST_ACCOUNT");
+			String snowflakeDatabase = System.getenv("SNOWFLAKE_TEST_DATABASE");
+			String snowflakePassword = System.getenv("SNOWFLAKE_TEST_PASSWORD");
+			String snowflakeSchema = System.getenv("SNOWFLAKE_TEST_SCHEMA");
+			String snowflakeUser = System.getenv("SNOWFLAKE_TEST_USER");
+			String snowflakeWarehouse = System.getenv("SNOWFLAKE_TEST_WAREHOUSE");
 			// Must be thread-safe in case an application changes System properties during Hibernate initialization.
 			// See HHH-8383.
+
+			systemProperties.setProperty( "hibernate.connection.password", snowflakePassword);
+			systemProperties.setProperty( "hibernate.connection.username", snowflakeUser);
+			systemProperties.setProperty( "hibernate.connection.url", "jdbc:snowflake://" + snowflakeAccount + ".snowflakecomputing.com/"
+																	+ "?database=" + snowflakeDatabase + "&JDBC_USE_SESSION_TIMEZONE=false&TIMEZONE=UTC&TIMESTAMP_TYPE_MAPPING=TIMESTAMP_NTZ&AUTOCOMMIT=false&schema=" + snowflakeSchema + "&warehouse=" + snowflakeWarehouse);
 			synchronized (systemProperties) {
 				GLOBAL_PROPERTIES.putAll(systemProperties);
 			}

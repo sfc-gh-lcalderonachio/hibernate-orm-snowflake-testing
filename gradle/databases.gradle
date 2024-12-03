@@ -13,6 +13,12 @@ ext {
         dbHost = System.getProperty( 'dbHost', 'localhost' )
         dbService = System.getProperty( 'dbService', '' )
         runID = System.getProperty( 'runID', '' )
+        snowflakeAccount = System.getenv("SNOWFLAKE_TEST_ACCOUNT")
+        snowflakeDatabase = System.getenv("SNOWFLAKE_TEST_DATABASE")
+        snowflakePassword = System.getenv("SNOWFLAKE_TEST_PASSWORD")
+        snowflakeSchema = System.getenv("SNOWFLAKE_TEST_SCHEMA")
+        snowflakeUser = System.getenv("SNOWFLAKE_TEST_USER")
+        snowflakeWarehouse = System.getenv("SNOWFLAKE_TEST_WAREHOUSE")
         dbBundle = [
                 h2 : [
                         'db.dialect' : 'org.hibernate.dialect.H2Dialect',
@@ -375,6 +381,15 @@ ext {
                         'connection.init_sql' : '',
                         'jdbc.url'   : 'jdbc:Altibase://' + dbHost + ':20300/mydb?force_clob_bind=true',
                         'jdbc.datasource' : 'Altibase.jdbc.driver.AltibaseDriver'
+                ],
+                snowflake : [
+                        'db.dialect' : 'net.snowflake.hibernate.dialect.SnowflakeDialect',
+                        'jdbc.driver': 'net.snowflake.client.jdbc.SnowflakeDriver',
+                        'jdbc.user'  : snowflakeUser,
+                        'jdbc.pass'  : snowflakePassword ,
+                        'jdbc.url'   : 'jdbc:snowflake://' + snowflakeAccount + '.snowflakecomputing.com/?database=' + snowflakeDatabase + '&JDBC_USE_SESSION_TIMEZONE=false&TIMEZONE=UTC&TIMESTAMP_TYPE_MAPPING=TIMESTAMP_NTZ&AUTOCOMMIT=false&schema=' + snowflakeSchema + '&warehouse=' + snowflakeWarehouse,
+                        'jdbc.datasource' : 'net.snowflake.client.jdbc.SnowflakeDriver',
+                        'connection.init_sql' : ''
                 ],
         ]
 }

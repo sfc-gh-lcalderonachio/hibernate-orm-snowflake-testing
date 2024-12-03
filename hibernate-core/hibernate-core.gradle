@@ -36,6 +36,8 @@ dependencies {
     implementation jakartaLibs.inject
 
     implementation libs.antlrRuntime
+    implementation libs.slf4j
+    implementation libs.snowflakeJdbc
 
     compileOnly jakartaLibs.jacc
     compileOnly jakartaLibs.validation
