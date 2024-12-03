@@ -19,6 +19,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Compile
+        run: ./gradlew clean compile -Pdb=snowflake --info
 
       # Run Gradle tests
       - name: Run Gradle Snowflake tests
