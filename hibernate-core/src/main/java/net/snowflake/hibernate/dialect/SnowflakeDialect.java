@@ -14,8 +14,6 @@ import org.hibernate.engine.jdbc.dialect.spi.DialectResolutionInfo;
 import org.hibernate.mapping.Column;
 import org.hibernate.sql.ast.SqlAstTranslatorFactory;
 import org.hibernate.sql.ast.spi.StandardSqlAstTranslatorFactory;
-import org.slf4j.Logger; // NOSONAR
-import org.slf4j.LoggerFactory; // NOSONAR
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,7 @@ import static org.hibernate.type.SqlTypes.*;
 
 /** Snowflake SQL Dialect. */
 public class SnowflakeDialect extends Dialect {
-private static final Logger log = LoggerFactory.getLogger(SnowflakeDialect.class);
+//private static final Logger log = LoggerFactory.getLogger(SnowflakeDialect.class);
 
 private static final String CONFIGURATION_PROPERTY_PREFIX = "hibernate.dialect.snowflake.";
 static final String CONFIGURATION_PROPERTY_TABLE_TYPE =
@@ -50,9 +48,9 @@ private final Version MINIMAL_DRIVER_VERSION = Version.from("3.13.31");
 */
 public SnowflakeDialect(DialectResolutionInfo info) {
 	super(info);
-	log.trace("Called SnowflakeDialect(DialectResolutionInfo)");
+	//log.trace("Called SnowflakeDialect(DialectResolutionInfo)");
 	Map<String, Object> configurationValues = info.getConfigurationValues();
-	logDialectProperties(configurationValues);
+//	logDialectProperties(configurationValues);
 	tableType =
 		TableType.valueOf(
 			(String)
@@ -74,29 +72,29 @@ private void warnOnUnsupportedDriverVersion(Map<String, Object> configurationVal
 				configurationValues.getOrDefault(
 					ALLOW_UNRECOMMENDED_JDBC_DRIVER_VERSION, "false"));
 	Version driverVersion = Version.from(SnowflakeDriver.implementVersion);
-	log.debug("JDBC Driver version {}", driverVersion);
+	//log.debug("JDBC Driver version {}", driverVersion);
 	if (MINIMAL_DRIVER_VERSION.compareTo(driverVersion) > 0) {
 		String errorMessage =
 			String.format(
 				"Using driver in version %s is not recommended - driver version should be at least %s",
 				driverVersion, MINIMAL_DRIVER_VERSION);
 		if (allowUnrecommendedJdbcDriver) {
-		log.warn(errorMessage);
+		//log.warn(errorMessage);
 		} else {
-		log.error(errorMessage);
+		//log.error(errorMessage);
 		throw new JdbcDriverVersionException(driverVersion, MINIMAL_DRIVER_VERSION);
 		}
 	}
 	} catch (VersionParsingException e) {
-	log.warn(e.getMessage());
+	//log.warn(e.getMessage());
 	}
 }
 
 private void warnOnUsingNonHybridTables() {
 	// security risk mitigation
 	if (tableType != TableType.HYBRID) {
-	log.warn(
-		"Be aware, that not hybrid tables don't enforce constraints (see: https://docs.snowflake.com/en/sql-reference/constraints-overview). It can also reduce performance as hybrid tables are preferred for OLTP.");
+//	log.warn(
+//		"Be aware, that not hybrid tables don't enforce constraints (see: https://docs.snowflake.com/en/sql-reference/constraints-overview). It can also reduce performance as hybrid tables are preferred for OLTP.");
 	}
 }
 
@@ -108,34 +106,34 @@ private static void warnOnPossibleSensitiveDataLoggingEnabled(
 			configurationValues
 				.getOrDefault(CONFIGURATION_PROPERTY_DEVELOPMENT_MODE, "false")
 				.toString());
-	warnOnPossibleSensitiveDataLogging(
-		developmentMode,
-		LoggerFactory.getLogger(HIBERNATE_PARAMETER_BINDING_LOGGER),
-		"Statement parameter bindings logging is enabled - it's recommended to turn it off on production environment");
-	warnOnPossibleSensitiveDataLogging(
-		developmentMode,
-		LoggerFactory.getLogger(HIBERNATE_EXTRACTED_VALUES_LOGGER),
-		"Extracted in select data logging is enabled - it's recommended to turn it off on production environment");
+//	warnOnPossibleSensitiveDataLogging(
+//		developmentMode,
+//		LoggerFactory.getLogger(HIBERNATE_PARAMETER_BINDING_LOGGER),
+//		"Statement parameter bindings logging is enabled - it's recommended to turn it off on production environment");
+//	warnOnPossibleSensitiveDataLogging(
+//		developmentMode,
+//		LoggerFactory.getLogger(HIBERNATE_EXTRACTED_VALUES_LOGGER),
+//		"Extracted in select data logging is enabled - it's recommended to turn it off on production environment");
 }
 
-private static void warnOnPossibleSensitiveDataLogging(
-	boolean developmentMode, Logger sensitiveDataLogger, String logMessage) {
-	if (sensitiveDataLogger.isTraceEnabled()) {
-	if (developmentMode) {
-		log.warn(logMessage);
-	} else {
-		log.error(logMessage);
-	}
-	}
-}
+//private static void warnOnPossibleSensitiveDataLogging(
+////	boolean developmentMode, Logger sensitiveDataLogger, String logMessage) {
+////	if (sensitiveDataLogger.isTraceEnabled()) {
+////	if (developmentMode) {
+////		log.warn(logMessage);
+////	} else {
+////		log.error(logMessage);
+////	}
+////	}
+//}
 
-private static void logDialectProperties(Map<String, Object> configurationValues) {
-	if (log.isTraceEnabled()) {
-	configurationValues.entrySet().stream()
-		.filter(e -> e.getKey().startsWith(CONFIGURATION_PROPERTY_PREFIX))
-		.forEach(e -> log.trace("Dialect property {} has value {}", e.getKey(), e.getValue()));
-	}
-}
+//private static void logDialectProperties(Map<String, Object> configurationValues) {
+//	if (log.isTraceEnabled()) {
+//	configurationValues.entrySet().stream()
+//		.filter(e -> e.getKey().startsWith(CONFIGURATION_PROPERTY_PREFIX))
+//		.forEach(e -> log.trace("Dialect property {} has value {}", e.getKey(), e.getValue()));
+//	}
+//}
 
 @Override
 public String getCreateTableString() {
