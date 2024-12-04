@@ -80,7 +80,8 @@ private void warnOnUnsupportedDriverVersion(Map<String, Object> configurationVal
 				driverVersion, MINIMAL_DRIVER_VERSION);
 		if (allowUnrecommendedJdbcDriver) {
 		//log.warn(errorMessage);
-		} else {
+		}
+		else {
 		//log.error(errorMessage);
 		throw new JdbcDriverVersionException(driverVersion, MINIMAL_DRIVER_VERSION);
 		}

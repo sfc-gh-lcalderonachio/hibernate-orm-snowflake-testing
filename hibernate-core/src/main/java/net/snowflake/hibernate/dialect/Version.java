@@ -18,8 +18,9 @@ static Version from(String rawVersion) {
 	try {
 	versionParts =
 		Stream.of(rawVersion.split("\\.")).map(Integer::parseInt).collect(Collectors.toList());
-	} catch (Exception e) {
-	throw new VersionParsingException(rawVersion, e);
+	}
+	catch (Exception e) {
+		throw new VersionParsingException(rawVersion, e);
 	}
 	if (versionParts.size() != 3) {
 	throw new VersionParsingException(rawVersion);
