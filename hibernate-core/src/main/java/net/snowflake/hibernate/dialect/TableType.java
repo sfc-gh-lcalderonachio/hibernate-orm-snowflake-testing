@@ -26,7 +26,8 @@ TableType(String tableModifier) {
 String createTableStatement() {
 	if (tableModifier == null) {
 	return "CREATE TABLE";
-	} else {
+	}
+	else {
 	return "CREATE " + tableModifier + " TABLE";
 	}
 }

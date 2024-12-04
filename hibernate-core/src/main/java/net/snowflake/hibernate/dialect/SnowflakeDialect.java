@@ -86,7 +86,8 @@ private void warnOnUnsupportedDriverVersion(Map<String, Object> configurationVal
 		throw new JdbcDriverVersionException(driverVersion, MINIMAL_DRIVER_VERSION);
 		}
 	}
-	} catch (VersionParsingException e) {
+	}
+	catch (VersionParsingException e) {
 	//log.warn(e.getMessage());
 	}
 }
