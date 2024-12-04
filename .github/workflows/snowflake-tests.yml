@@ -12,15 +12,19 @@ jobs:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-
       # Set up JDK (example: OpenJDK 11, can be changed based on your project requirements)
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Compile
-        run: ./gradlew clean compile -Pdb=snowflake --info
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build with Gradle
+        run: ./gradlew build
+
+
+
 
 
 
