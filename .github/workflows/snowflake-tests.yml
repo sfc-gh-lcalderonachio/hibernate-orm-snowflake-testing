@@ -37,7 +37,7 @@ jobs:
 
       # Run Gradle tests
       - name: Run Gradle Snowflake tests
-        run: ./gradlew :hibernate-core:matrix_snowflake
+        run: ./gradlew :hibernate-core:matrix_snowflake -i
 
       # Optionally: Upload test results to GitHub Actions
       - name: Upload test results
