@@ -8,6 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
+      JDK_JAVA_OPTIONS: --add-reads=org.apache.arrow.flight.core=ALL-UNNAMED --add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED
       SNOWFLAKE_TEST_ACCOUNT: ${{secrets.SNOWFLAKE_TEST_ACCOUNT_AWS}}
       SNOWFLAKE_TEST_DATABASE: ${{secrets.SNOWFLAKE_TEST_DATABASE}}
       SNOWFLAKE_TEST_PASSWORD: ${{secrets.SNOWFLAKE_TEST_PASSWORD_AWS}}
